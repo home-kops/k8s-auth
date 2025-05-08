@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lldap-service
+  namespace: auth
+spec:
+  selector:
+    app: lldap
+  type: ClusterIP
+  ports:
+  - name: ldap
+    port: 3890
+    targetPort: 3890
+  - name: web-ui
+    port: 17170
+    targetPort: 17170

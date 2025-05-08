@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lldap
+  namespace: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lldap
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: lldap
+    spec:
+      containers:
+      - name: lldap
+        image: nitnelave/lldap:latest  
+        env:
+        - name: GID
+          value: "1001"
+        - name: LLDAP_JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: lldap-secrets
+              key: jwt-secret
+        - name: LLDAP_LDAP_BASE_DN
+          valueFrom:
+            secretKeyRef:
+              name: lldap-secrets
+              key: base-dn
+        - name: LLDAP_LDAP_USER_PASS
+          valueFrom:
+            secretKeyRef:
+              name: lldap-secrets
+              key: ldap-user-pass
+        - name: UID
+          value: "1001"
+        ports:
+        - name: ldap
+          containerPort: 3890
+        - name: web-ui
+          containerPort: 17170
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      restartPolicy: Always
+      volumes:
+      - name: data
+        nfs:
+          server: ${NFS1_SERVER}
+          path: /volume1/kubernetes/data/lldap
