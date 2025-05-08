@@ -28,11 +28,6 @@ spec:
             secretKeyRef:
               name: lldap-secrets
               key: jwt-secret
-        - name: LLDAP_KEY_SEED
-          valueFrom:
-            secretKeyRef:
-              name: lldap-secrets
-              key: key-seed
         - name: LLDAP_LDAP_BASE_DN
           valueFrom:
             secretKeyRef:
