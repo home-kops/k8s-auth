@@ -36,14 +36,14 @@ spec:
         projected:
           sources:
           - secret:
-            name: lldap-admin-user
+            name: lldap-bootstrap-configs
             items:
-            - key: user-config.json
+            - key: admin-config.json
               path: admin-config.json
           - secret:
-            name: lldap-password-manager-user
+            name: lldap-bootstrap-configs
             items:
-            - key: user-config.json
+            - key: password-manager-config.json
               path: password-manager-config.json
           - secret:
             name: lldap-bootstrap-configs
