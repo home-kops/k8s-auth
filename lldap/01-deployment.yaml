@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: lldap
-        image: nitnelave/lldap:latest  
+        image: nitnelave/lldap:2025-04-25-alpine
         env:
         - name: GID
           value: "1001"
@@ -26,6 +26,11 @@ spec:
             secretKeyRef:
               name: lldap-secrets
               key: jwt-secret
+        - name: LLDAP_KEY_SEED
+          valueFrom:
+            secretKeyRef:
+              name: lldap-secrets
+              key: key-seed
         - name: LLDAP_LDAP_BASE_DN
           valueFrom:
             secretKeyRef:
