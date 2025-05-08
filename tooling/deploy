@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -eu
+
+dry_run_mode="none"
+
+while getopts "d" flag; do
+    case $flag in
+    d)
+        echo "Running dry-run mode..."
+        dry_run_mode="server"
+        ;;
+    \?)
+        echo "Wrong argument"
+        exit 1
+        ;;
+    esac
+done
+
+project_path="$(git rev-parse --show-toplevel)"
+
+# Common resources
+echo -e "\nDeploying common resources..."
+common_dir="${project_path}/common"
+
+# Deploy namespace
+kubectl apply -f "${common_dir}"/00-namespace.yaml
+echo -e "Done!\n"
+
+# lldap
+echo -e "\nDeploying lldap..."
+lldap_dir="${project_path}/lldap"
+
+# Replace env variables
+envsubst <"${lldap_dir}"/01-deployment.yaml | sponge "${lldap_dir}"/01-deployment.yaml
+envsubst <"${lldap_dir}"/03-ingress-route.yaml | sponge "${lldap_dir}"/03-ingress-route.yaml
+
+kubectl apply -f "${lldap_dir}" --dry-run="${dry_run_mode}"
+
+echo -e "Done!\n"
