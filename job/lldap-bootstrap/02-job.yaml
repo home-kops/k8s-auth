@@ -9,9 +9,17 @@ spec:
       restartPolicy: Never
       containers:
       - name: bootstrap
-        image: lldap/lldap:v0.5.0
-        command:
-        - /app/bootstrap.sh
+        image: nitnelave/lldap:2025-04-25-alpine
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            if [ -f /data/lldap.db ]; then
+              echo "Database already exists. Skipping bootstrap.";
+              exit 0;
+            fi
+
+            echo "Database not found. Running bootstrap...";
+            /app/bootstrap.sh
         env:
         - name: LLDAP_URL
           value: "http://localhost:8080"
