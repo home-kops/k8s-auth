@@ -31,6 +31,8 @@ spec:
         - name: group-configs
           mountPath: /bootstrap/group-configs
           readOnly: true
+        - name: data
+          mountPath: /data
       volumes:
       - name: user-configs
         projected:
@@ -48,3 +50,7 @@ spec:
             items:
             - key: admin-group-config.json
               path: admin-group-config.json
+      - name: data
+        nfs:
+          server: ${NFS1_SERVER}
+          path: /volume1/kubernetes/data/lldap
