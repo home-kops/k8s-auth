@@ -11,9 +11,6 @@ spec:
   - name: ldap
     port: 3890
     targetPort: 3890
-  - name: bootstrap
-    port: 8080
-    targetPort: 8080
   - name: web-ui
     port: 17170
     targetPort: 17170

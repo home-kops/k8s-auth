@@ -22,7 +22,7 @@ spec:
             /app/bootstrap.sh
         env:
         - name: LLDAP_URL
-          value: "http://ldap-service:8080"
+          value: "http://lldap-service:17170"
         - name: LLDAP_ADMIN_USERNAME
           value: "admin"
         - name: LLDAP_ADMIN_PASSWORD
