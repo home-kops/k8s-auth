@@ -46,7 +46,7 @@ spec:
         projected:
           sources:
           - secret:
-              name: lldap-bootstrap-configs
+              name: lldap-secrets
               items:
               - key: admin-user-config.json
                 path: admin-user-config.json
@@ -54,7 +54,7 @@ spec:
         projected:
           sources:
           - secret:
-              name: lldap-bootstrap-configs
+              name: lldap-secrets
               items:
               - key: admin-group-config.json
                 path: admin-group-config.json
