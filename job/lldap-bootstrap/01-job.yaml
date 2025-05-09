@@ -46,18 +46,18 @@ spec:
         projected:
           sources:
           - secret:
-            name: lldap-bootstrap-configs
-            items:
-            - key: admin-user-config.json
-              path: admin-user-config.json
+              name: lldap-bootstrap-configs
+              items:
+              - key: admin-user-config.json
+                path: admin-user-config.json
       - name: group-configs
         projected:
           sources:
           - secret:
-            name: lldap-bootstrap-configs
-            items:
-            - key: admin-group-config.json
-              path: admin-group-config.json
+              name: lldap-bootstrap-configs
+              items:
+              - key: admin-group-config.json
+                path: admin-group-config.json
       - name: data
         nfs:
           server: ${NFS1_SERVER}
