@@ -51,5 +51,6 @@ spec:
       restartPolicy: Always
       volumes:
       - name: data
-        persistentVolumeClaim:
-          claimName: lldap-data
+        nfs:
+          server: ${NFS1_SERVER}
+          path: /volume1/kubernetes/data/lldap

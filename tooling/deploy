@@ -32,7 +32,8 @@ echo -e "\nDeploying lldap..."
 lldap_dir="${project_path}/lldap"
 
 # Replace env variables
-envsubst <"${lldap_dir}"/04-ingress-route.yaml | sponge "${lldap_dir}"/04-ingress-route.yaml
+envsubst <"${lldap_dir}"/01-deployment.yaml | sponge "${lldap_dir}"/01-deployment.yaml
+envsubst <"${lldap_dir}"/03-ingress-route.yaml | sponge "${lldap_dir}"/03-ingress-route.yaml
 
 kubectl apply -f "${lldap_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
@@ -40,6 +41,9 @@ echo -e "Done!\n"
 # lldap-bootstrap
 echo -e "\nRunning lldap-bootstrap..."
 lldap_bootstrap_dir="${project_path}/job/lldap-bootstrap"
+
+# Replace env variables
+envsubst <"${lldap_dir}"/00-job.yaml | sponge "${lldap_dir}"/00-job.yaml
 
 kubectl apply -f "${lldap_bootstrap_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
