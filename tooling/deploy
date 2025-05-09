@@ -27,27 +27,19 @@ common_dir="${project_path}/common"
 kubectl apply -f "${common_dir}"/00-namespace.yaml
 echo -e "Done!\n"
 
-# lldap-bootstrap
-echo -e "\nRunning lldap-bootstrap..."
-lldap_bootstrap_dir="${project_path}/job/lldap-bootstrap"
-
-kubectl apply -f "${lldap_bootstrap_dir}" --dry-run="${dry_run_mode}"
-echo -e "Done!\n"
-
-# Wait for lldap-bootstrap job to complete
-if [[ "${dry_run_mode}" == "none" ]]; then
-    echo -e "\nWaiting for lldap-bootstrap job to complete..."
-    kubectl wait -n auth --for=condition=complete job/lldap-bootstrap --timeout=60s
-else
-    echo -e "\nSkipping waiting for lldap-bootstrap job in dry-run mode..."
-fi
-
 # lldap
 echo -e "\nDeploying lldap..."
 lldap_dir="${project_path}/lldap"
 
 # Replace env variables
-envsubst <"${lldap_dir}"/02-ingress-route.yaml | sponge "${lldap_dir}"/02-ingress-route.yaml
+envsubst <"${lldap_dir}"/04-ingress-route.yaml | sponge "${lldap_dir}"/04-ingress-route.yaml
 
 kubectl apply -f "${lldap_dir}" --dry-run="${dry_run_mode}"
+echo -e "Done!\n"
+
+# lldap-bootstrap
+echo -e "\nRunning lldap-bootstrap..."
+lldap_bootstrap_dir="${project_path}/job/lldap-bootstrap"
+
+kubectl apply -f "${lldap_bootstrap_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
