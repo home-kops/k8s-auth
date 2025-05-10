@@ -30,9 +30,9 @@ spec:
         - name: user-configs
           mountPath: /bootstrap/user-configs
           readOnly: true
-#        - name: group-configs
-#          mountPath: /bootstrap/group-configs
-#          readOnly: true
+        - name: group-configs
+          mountPath: /bootstrap/group-configs
+          readOnly: true
         - name: data
           mountPath: /data
       volumes:
@@ -46,12 +46,12 @@ spec:
                 path: keycloak-user-config.json
               - key: user-1-config.json
                 path: user-1-config.json
-#      - name: group-configs
-#        projected:
-#          sources:
-#          - secret:
-#              name: lldap-secrets
-#              items:
+      - name: group-configs
+        projected:
+          sources:
+          - secret:
+              name: lldap-secrets
+              items: []
 #              - key: admin-group-config.json
 #                path: admin-group-config.json
       - name: data
