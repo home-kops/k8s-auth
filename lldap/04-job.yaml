@@ -52,6 +52,8 @@ spec:
           - secret:
               name: auth-secrets
               items:
+              - key: keycloak-group-config.json
+                path: keycloak-group-config.json
               - key: group-1-config.json
                 path: group-1-config.json
       - name: data
