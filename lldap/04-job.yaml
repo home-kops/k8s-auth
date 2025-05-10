@@ -50,7 +50,7 @@ spec:
         projected:
           sources:
           - secret:
-              name: lldap-secrets
+              name: auth-secrets
               items: []
 #              - key: admin-group-config.json
 #                path: admin-group-config.json
