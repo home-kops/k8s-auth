@@ -28,17 +28,17 @@ spec:
         - name: LLDAP_JWT_SECRET
           valueFrom:
             secretKeyRef:
-              name: lldap-secrets
+              name: auth-secrets
               key: lldap-jwt-secret
         - name: LLDAP_LDAP_BASE_DN
           valueFrom:
             secretKeyRef:
-              name: lldap-secrets
+              name: auth-secrets
               key: lldap-base-dn
         - name: LLDAP_LDAP_USER_PASS
           valueFrom:
             secretKeyRef:
-              name: lldap-secrets
+              name: auth-secrets
               key: lldap-admin-password
         ports:
         - name: ldap

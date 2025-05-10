@@ -17,12 +17,12 @@ spec:
         - name: LLDAP_ADMIN_USERNAME
           valueFrom:
             secretKeyRef:
-              name: lldap-secrets
+              name: auth-secrets
               key: lldap-admin-username
         - name: LLDAP_ADMIN_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: lldap-secrets
+              name: auth-secrets
               key: lldap-admin-password
         - name: DO_CLEANUP
           value: "true"
@@ -40,7 +40,7 @@ spec:
         projected:
           sources:
           - secret:
-              name: lldap-secrets
+              name: auth-secrets
               items:
               - key: keycloak-user-config.json
                 path: keycloak-user-config.json
