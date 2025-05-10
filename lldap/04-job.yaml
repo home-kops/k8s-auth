@@ -47,7 +47,13 @@ spec:
               - key: user-1-config.json
                 path: user-1-config.json
       - name: group-configs
-        emptyDir: {}
+        projected:
+          sources:
+          - secret:
+              name: auth-secrets
+              items:
+              - key: group-1-config.json
+                path: group-1-config.json
       - name: data
         persistentVolumeClaim:
           claimName: lldap-data
