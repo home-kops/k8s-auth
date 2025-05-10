@@ -30,9 +30,9 @@ spec:
         - name: user-configs
           mountPath: /bootstrap/user-configs
           readOnly: true
-        - name: group-configs
-          mountPath: /bootstrap/group-configs
-          readOnly: true
+#        - name: group-configs
+#          mountPath: /bootstrap/group-configs
+#          readOnly: true
         - name: data
           mountPath: /data
       volumes:
