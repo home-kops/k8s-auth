@@ -29,17 +29,17 @@ spec:
           valueFrom:
             secretKeyRef:
               name: lldap-secrets
-              key: jwt-secret
+              key: lldap-jwt-secret
         - name: LLDAP_LDAP_BASE_DN
           valueFrom:
             secretKeyRef:
               name: lldap-secrets
-              key: base-dn
+              key: lldap-base-dn
         - name: LLDAP_LDAP_USER_PASS
           valueFrom:
             secretKeyRef:
               name: lldap-secrets
-              key: ldap-user-pass
+              key: lldap-admin-password
         ports:
         - name: ldap
           containerPort: 3890
