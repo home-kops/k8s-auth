@@ -42,10 +42,16 @@ server:
 
 worker:
   volumes:
+  - name: authentik-secrets
+    secret:
+      secretName: authentik-secrets
   - name: postgresql-secrets
     secret:
       secretName: postgresql-secrets
   volumeMounts:
+  - name: authentik-secrets
+    mountPath: /authentik-secrets
+    readOnly: true
   - name: postgresql-secrets
     mountPath: /postgresql-secrets
     readOnly: true
