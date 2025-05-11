@@ -1,11 +1,8 @@
 authentik:
-  secret_key: file:///authentik-creds/authentik-secret-key
+  secret_key: file:///authentik-secrets/authentik-secret-key
   postgresql:
-    host: authentik-postgresql
-    user: file:///authentik-creds/authentik-postgres-username
-    password: file:///authentik-creds/authentik-postgres-password
-  redis:
-    host: authentik-redis-master
+    user: file:///postgresql-secrets/username
+    password: file:///postgresql-secrets/password
 
 postgresql:
   enabled: true
@@ -15,12 +12,18 @@ redis:
 
 server:
   volumes:
-  - name: authentik-creds
+  - name: authentik-secrets
     secret:
       secretName: authentik-secrets
+  - name: postgresql-secrets
+    secret:
+      secretName: postgresql-secrets
   volumeMounts:
-  - name: authentik-creds
-    mountPath: /authentik-creds
+  - name: authentik-secrets
+    mountPath: /authentik-secrets
+    readOnly: true
+  - name: postgresql-secrets
+    mountPath: /postgresql-secrets
     readOnly: true
   ingress:
     enabled: true
@@ -32,10 +35,16 @@ server:
 
 worker:
   volumes:
-  - name: authentik-creds
+  - name: authentik-secrets
     secret:
       secretName: authentik-secrets
+  - name: postgresql-secrets
+    secret:
+      secretName: postgresql-secrets
   volumeMounts:
-  - name: authentik-creds
-    mountPath: /authentik-creds
+  - name: authentik-secrets
+    mountPath: /authentik-secrets
+    readOnly: true
+  - name: postgresql-secrets
+    mountPath: /postgresql-secrets
     readOnly: true
