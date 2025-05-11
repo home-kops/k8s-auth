@@ -13,30 +13,6 @@ redis:
   enabled: true
 
 server:
-  initContainers:
-  - name: bootstrap-superuser
-    image: ghcr.io/goauthentik/server:latest
-    imagePullPolicy: IfNotPresent
-    command:
-      - /bin/sh
-      - -c
-      - |
-        /bin/bash -c "
-        if ! /bin/bash -c 'echo \"from authentik.core.models import User; print(User.objects.filter(username=\\\"admin\\\").exists())\" | python3 /app/authentik/manage.py shell' | grep -q True; then
-          authentik bootstrap-superuser --username admin --email ${ADMIN_EMAIL} --password ${BOOTSTRAP_PASSWORD};
-        fi
-        "
-    env:
-    - name: ADMIN_EMAIL
-      valueFrom:
-        secretKeyRef:
-          name: authentik-secrets
-          key: admin-email
-    - name: BOOTSTRAP_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: authentik-secrets
-          key: admin-password
   volumes:
   - name: authentik-secrets
     secret:
