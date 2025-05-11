@@ -4,9 +4,10 @@ authentik:
     user: file:///postgresql-secrets/username
     password: file:///postgresql-secrets/password
 
-envFrom:
-- secretRef:
-    name: authentik-bootstrap-secrets
+global:
+  envFrom:
+  - secretRef:
+      name: authentik-bootstrap-secrets
 
 postgresql:
   enabled: true
