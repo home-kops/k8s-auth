@@ -6,6 +6,8 @@ authentik:
 
 postgresql:
   enabled: true
+  auth:
+    existingSecret: postgresql-secrets
 
 redis:
   enabled: true
