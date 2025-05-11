@@ -1,11 +1,11 @@
 authentik:
   secret_key: file:///authentik-creds/authentik-secret-key
   postgresql:
-    host: postgres.${DOMAIN}
+    host: authentik-postgresql
     user: file:///authentik-creds/authentik-postgres-username
     password: file:///authentik-creds/authentik-postgres-password
   redis:
-    host: redis.${DOMAIN}
+    host: authentik-redis-master
 
 postgresql:
   enabled: true
