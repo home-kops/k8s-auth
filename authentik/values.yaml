@@ -15,7 +15,7 @@ redis:
 server:
   envFrom:
   - secretRef:
-    name: authentik-bootstrap-secrets
+      name: authentik-bootstrap-secrets
   volumes:
   - name: authentik-secrets
     secret:
