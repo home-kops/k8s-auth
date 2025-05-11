@@ -17,6 +17,9 @@ while getopts "d" flag; do
     esac
 done
 
+# Install authentik helm chart
+helm repo add authentik https://charts.goauthentik.io && helm repo update
+
 project_path="$(git rev-parse --show-toplevel)"
 
 # Common resources
@@ -25,16 +28,22 @@ common_dir="${project_path}/common"
 
 # Deploy namespace
 kubectl apply -f "${common_dir}"/00-namespace.yaml
-kubectl apply -f "${common_dir}" --dry-run="${dry_run_mode}"
 
 echo -e "Done!\n"
 
-# lldap
-echo -e "\nDeploying lldap..."
-lldap_dir="${project_path}/lldap"
+# authentik
+echo -e "\nDeploying authentik..."
+authentik_dir="${project_path}/authentik"
 
 # Replace env variables
-envsubst <"${lldap_dir}"/03-ingress-route.yaml | sponge "${lldap_dir}"/03-ingress-route.yaml
+envsubst <"${authentik_dir}"/00-secret.yaml | sponge "${authentik_dir}"/00-secret.yaml
 
-kubectl apply -f "${lldap_dir}" --dry-run="${dry_run_mode}"
+kubectl apply -f "${authentik_dir}"/00-secret.yaml --dry-run="${dry_run_mode}"
+
+if [[ "${dry_run_mode}" == "server" ]]; then
+    helm upgrade authentik authentik/authentik --install --namespace auth -f "${authentik_dir}"/values.yaml --dry-run="server"
+else
+    helm upgrade authentik authentik/authentik --install --namespace auth -f "${authentik_dir}"/values.yaml
+fi
+
 echo -e "Done!\n"

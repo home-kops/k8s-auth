@@ -1,0 +1,40 @@
+authentik:
+  postgresql:
+    host: postgres.${DOMAIN}
+    user: file:///postgres-creds/username
+    password: file:///postgres-creds/password
+  redis:
+    host: redis.${DOMAIN}
+
+postgresql:
+  enabled: true
+
+redis:
+  enabled: true
+
+server:
+  volumes:
+  - name: postgres-creds
+    secret:
+      secretName: authentik-secrets
+  volumeMounts:
+  - name: postgres-creds
+    mountPath: /postgres-creds
+    readOnly: true
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hosts:
+    - authentik.${DOMAIN}
+
+worker:
+  volumes:
+  - name: postgres-creds
+    secret:
+      secretName: authentik-secrets
+  volumeMounts:
+  - name: postgres-creds
+    mountPath: /postgres-creds
+    readOnly: true
