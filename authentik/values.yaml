@@ -1,5 +1,7 @@
 authentik:
   secret_key: file:///authentik-secrets/authentik-secret-key
+  bootstrap_token: file:///authentik-bootstrap-secrets/token
+  bootstrap_password: file:///authentik-bootstrap-secrets/password
   postgresql:
     user: file:///postgresql-secrets/username
     password: file:///postgresql-secrets/password
@@ -13,19 +15,22 @@ redis:
   enabled: true
 
 server:
-  envFrom:
-  - secretRef:
-      name: authentik-bootstrap-secrets
   volumes:
   - name: authentik-secrets
     secret:
       secretName: authentik-secrets
+  - name: authentik-bootstrap-secrets
+    secret:
+      secretName: authentik-bootstrap-secrets
   - name: postgresql-secrets
     secret:
       secretName: postgresql-secrets
   volumeMounts:
   - name: authentik-secrets
     mountPath: /authentik-secrets
+    readOnly: true
+  - name: authentik-bootstrap-secrets
+    mountPath: /authentik-bootstrap-secrets
     readOnly: true
   - name: postgresql-secrets
     mountPath: /postgresql-secrets
@@ -43,12 +48,18 @@ worker:
   - name: authentik-secrets
     secret:
       secretName: authentik-secrets
+  - name: authentik-bootstrap-secrets
+    secret:
+      secretName: authentik-bootstrap-secrets
   - name: postgresql-secrets
     secret:
       secretName: postgresql-secrets
   volumeMounts:
   - name: authentik-secrets
     mountPath: /authentik-secrets
+    readOnly: true
+  - name: authentik-bootstrap-secrets
+    mountPath: /authentik-bootstrap-secrets
     readOnly: true
   - name: postgresql-secrets
     mountPath: /postgresql-secrets
