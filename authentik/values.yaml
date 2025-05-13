@@ -45,12 +45,18 @@ worker:
   - name: authentik-secrets
     secret:
       secretName: authentik-secrets
+  - name: authentik-blueprints
+    configMap:
+      name: authentik-blueprints
   - name: postgresql-secrets
     secret:
       secretName: postgresql-secrets
   volumeMounts:
   - name: authentik-secrets
     mountPath: /authentik-secrets
+    readOnly: true
+  - name: authentik-blueprints
+    mountPath: /blueprints
     readOnly: true
   - name: postgresql-secrets
     mountPath: /postgresql-secrets
