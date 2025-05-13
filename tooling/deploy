@@ -37,7 +37,7 @@ authentik_dir="${project_path}/authentik"
 
 # Replace env variables
 envsubst <"${authentik_dir}"/00-secret.yaml | sponge "${authentik_dir}"/00-secret.yaml
-envsubst  "${DOMAIN}" <"${authentik_dir}"/01-config-map.yaml | sponge "${authentik_dir}"/01-config-map.yaml
+envsubst '${DOMAIN}' <"${authentik_dir}"/01-config-map.yaml | sponge "${authentik_dir}"/01-config-map.yaml
 envsubst <"${authentik_dir}"/values.yaml | sponge "${authentik_dir}"/values.yaml
 
 kubectl apply -f "${authentik_dir}"/00-secret.yaml --dry-run="${dry_run_mode}"
