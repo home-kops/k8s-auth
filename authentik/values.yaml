@@ -56,7 +56,7 @@ worker:
     mountPath: /authentik-secrets
     readOnly: true
   - name: authentik-blueprints
-    mountPath: /blueprints
+    mountPath: /blueprints/apps
     readOnly: true
   - name: postgresql-secrets
     mountPath: /postgresql-secrets
