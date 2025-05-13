@@ -17,7 +17,7 @@ data:
       attrs:
         name: Grafana OIDC
         client_id: grafana
-        client_secret: grafana-super-secret
+        client_secret: ${AUTHENTIK_GRAFANA_SECRET}
         client_type: confidential
         issuer_mode: per_provider
         include_claims_in_id_token: true
@@ -49,6 +49,6 @@ data:
         user_matching_mode: email
         group: ''
         client_id: grafana
-        client_secret: grafana-super-secret
+        client_secret: ${AUTHENTIK_GRAFANA_SECRET}
         redirect_uris:
         - https://grafana.${DOMAIN}/login/generic_oauth
