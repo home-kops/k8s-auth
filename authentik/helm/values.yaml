@@ -8,6 +8,11 @@ global:
   envFrom:
   - secretRef:
       name: authentik-bootstrap-secrets
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "node-s"
+    effect: "NoSchedule"
 
 postgresql:
   enabled: true

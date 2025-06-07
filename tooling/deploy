@@ -38,15 +38,15 @@ authentik_dir="${project_path}/authentik"
 # Replace env variables
 envsubst <"${authentik_dir}"/00-secret.yaml | sponge "${authentik_dir}"/00-secret.yaml
 envsubst <"${authentik_dir}"/01-config-map.yaml | sponge "${authentik_dir}"/01-config-map.yaml
-envsubst <"${authentik_dir}"/values.yaml | sponge "${authentik_dir}"/values.yaml
+envsubst <"${authentik_dir}"/helm/values.yaml | sponge "${authentik_dir}"/helm/values.yaml
 
 kubectl apply -f "${authentik_dir}"/00-secret.yaml --dry-run="${dry_run_mode}"
 kubectl apply -f "${authentik_dir}"/01-config-map.yaml --dry-run="${dry_run_mode}"
 
 if [[ "${dry_run_mode}" == "server" ]]; then
-    helm upgrade authentik authentik/authentik --install --namespace auth -f "${authentik_dir}"/values.yaml --dry-run="server"
+    helm upgrade authentik authentik/authentik --install --namespace auth -f "${authentik_dir}"/helm/values.yaml --dry-run="server"
 else
-    helm upgrade authentik authentik/authentik --install --namespace auth -f "${authentik_dir}"/values.yaml
+    helm upgrade authentik authentik/authentik --install --namespace auth -f "${authentik_dir}"/helm/values.yaml
 fi
 
 echo -e "Done!\n"
