@@ -44,6 +44,11 @@ server:
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
     - authentik.${DOMAIN}
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "node-s"
+    effect: "NoSchedule"
 
 worker:
   volumes:
@@ -66,3 +71,8 @@ worker:
   - name: postgresql-secrets
     mountPath: /postgresql-secrets
     readOnly: true
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "node-s"
+    effect: "NoSchedule"
